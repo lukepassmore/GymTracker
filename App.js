@@ -1,73 +1,85 @@
 import React, {Component} from "react";
-import {Platform, StyleSheet, Text, View, AppRegistry} from "react-native";
+import {Platform, StyleSheet, Text, View, AppRegistry, Button} from "react-native";
 import { NativeRouter, Route, Link } from "react-router-native";
 
 const Home = () => <Text style={styles.header}>Home</Text>;
 
-const About = () => <Text style={styles.header}>About</Text>;
+const Calendar = () => <Text style={styles.header}>Calendar</Text>;
 
-const Topic = ({ match }) => (
-  <Text style={styles.topic}>{match.params.topicId}</Text>
+const Workout = ({ match }) => (
+  <Text style={styles.topic}>{match.params.workoutId}</Text>
 );
 
-const Topics = ({ match }) => (
+const Workouts = ({ match }) => (
   <View>
-    <Text style={styles.header}>Topics</Text>
+    <Text style={styles.header}>Workouts</Text>
+
+    <Route
+      exact
+      path={match.path}
+      render={() => <Text style={styles.topic}>Select a workout plan.</Text>}
+    />
+
     <View>
       <Link
         to={`${match.url}/rendering`}
         style={styles.subNavItem}
         underlayColor="#f0f4f7"
       >
-        <Text>Rendering with React</Text>
+        <Text>Day 1</Text>
       </Link>
       <Link
         to={`${match.url}/components`}
         style={styles.subNavItem}
         underlayColor="#f0f4f7"
       >
-        <Text>Components</Text>
+        <Text>Day 2</Text>
       </Link>
       <Link
         to={`${match.url}/props-v-state`}
         style={styles.subNavItem}
         underlayColor="#f0f4f7"
       >
-        <Text>Props v. State</Text>
+        <Text>Day 3</Text>
       </Link>
     </View>
 
-    <Route path={`${match.path}/:topicId`} component={Topic} />
-    <Route
-      exact
-      path={match.path}
-      render={() => <Text style={styles.topic}>Please select a topic.</Text>}
-    />
+    <Route path={`${match.path}/:workoutId`} component={Workout} />
+
   </View>
 );
 
+const platform = Platform.select({
+  ios: 'iOS',
+  android: 'Android',
+});
 
 type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
 <NativeRouter>
+    
+
+    <View style={styles.header}>
+      <Route exact path="/" component={Home} />
+      <Route path="/calendar" component={Calendar} />
+      <Route path="/workouts" component={Workouts} />
+    </View>
 
     <View style={styles.container}>
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/topics" component={Topics} />
+      <Text>You are using an {platform} device</Text>
     </View>
 
     <View style={styles.nav}>
-        <Link to="/about" underlayColor="#f0f4f7" style={styles.navItem}>
-          <Text>About</Text>
+        <Link to="/calendar" underlayColor="#f0f4f7" style={styles.navItem}>
+          <Text>Calendar</Text>
         </Link>
         <Link to="/" underlayColor="#f0f4f7" style={styles.navItem}>
           <Text>Home</Text>
         </Link>
-        <Link to="/topics" underlayColor="#f0f4f7" style={styles.navItem}>
-          <Text>Topics</Text>
+        <Link to="/workouts" underlayColor="#f0f4f7" style={styles.navItem}>
+          <Text>Workouts</Text>
         </Link>
       </View>
 
@@ -83,7 +95,11 @@ const styles = StyleSheet.create({
     flex: 1
   },
   header: {
-    fontSize: 20
+    marginTop: 5,
+    padding: 10,
+    flex: 1,
+    fontSize: 16,
+    alignItems: "center"
   },
   nav: {
     flexDirection: "row",
@@ -106,11 +122,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-  },
-  header: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
   main: {
     textAlign: 'center',
