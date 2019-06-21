@@ -4,7 +4,9 @@ import { NativeRouter, Route, Link } from "react-router-native";
 
 const Home = () => <Text style={styles.header}>Home</Text>;
 
-const Calendar = () => <Text style={styles.header}>Calendar</Text>;
+const Search = () => <Text style={styles.header}>Search</Text>;
+
+const Progress = () => <Text style={styles.header}>Progress</Text>;
 
 const Workout = ({ match }) => (
   <Text style={styles.topic}>{match.params.workoutId}</Text>
@@ -63,8 +65,9 @@ export default class App extends Component<Props> {
 
     <View style={styles.header}>
       <Route exact path="/" component={Home} />
-      <Route path="/calendar" component={Calendar} />
       <Route path="/workouts" component={Workouts} />
+      <Route path="/progress" component={Progress} />
+      <Route path="/search" component={Search} />
     </View>
 
     <View style={styles.container}>
@@ -72,14 +75,17 @@ export default class App extends Component<Props> {
     </View>
 
     <View style={styles.nav}>
-        <Link to="/calendar" underlayColor="#f0f4f7" style={styles.navItem}>
-          <Text>Calendar</Text>
+        <Link to="/search" style={styles.navItem}>
+          <Text>Search</Text>
         </Link>
-        <Link to="/" underlayColor="#f0f4f7" style={styles.navItem}>
-          <Text>Home</Text>
+        <Link to="/progress" style={styles.navItem}>
+          <Text>Progress</Text>
         </Link>
-        <Link to="/workouts" underlayColor="#f0f4f7" style={styles.navItem}>
+        <Link to="/workouts" style={styles.navItem}>
           <Text>Workouts</Text>
+        </Link>
+        <Link to="/" style={styles.navItem}>
+          <Text>Dashboard</Text>
         </Link>
       </View>
 
@@ -104,7 +110,9 @@ const styles = StyleSheet.create({
   nav: {
     flexDirection: "row",
     justifyContent: "space-around",
-    height: 50
+    height: 50,
+    backgroundColor: "#3F5AA6",
+    color: "#AFAFAF"
   },
   navItem: {
     flex: 1,
